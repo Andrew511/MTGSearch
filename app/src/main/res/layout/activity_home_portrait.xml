@@ -15,6 +15,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Take Photo"
+        android:onClick="takePhoto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/selectPhoto"
         app:layout_constraintHorizontal_bias="0.454"
@@ -30,11 +31,13 @@
         android:layout_marginEnd="28dp"
         android:layout_marginTop="8dp"
         android:text="Select Photo"
+        android:onClick="selectPhoto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardName"
         app:layout_constraintVertical_bias="0.015" />
 
+    <!--ToDo Change text to empty string, string included as example for testing  -->
     <EditText
         android:id="@+id/cardName"
         android:layout_width="544dp"
@@ -43,7 +46,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Card Name"
+        android:text="Archangel Avacyn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
@@ -58,6 +61,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="108dp"
+        android:onClick="searchCard"
         android:text="Submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
