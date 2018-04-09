@@ -42,10 +42,15 @@ public class Card_Stats extends AppCompatActivity {
             // ToDo Add auto repeating text fields for each set of rulings
         ((TextView)findViewById(R.id.cardName)).setText(card.opt("name").toString());
         ((TextView)findViewById(R.id.cardCost)).setText(card.opt("manaCost").toString());
-        ((TextView)findViewById(R.id.cardPT)).setText(card.opt("power").toString() + "/"
-                + card.opt("toughness").toString());
-        ((TextView)findViewById(R.id.cardText)).setText(card.opt("originalText").toString());
-        ((TextView)findViewById(R.id.cardType)).setText(card.opt("originalType").toString());
+        if (card.opt("power") != null && card.opt("toughness") != null) {
+            ((TextView) findViewById(R.id.cardPT)).setText(card.opt("power").toString() + "/"
+                    + card.opt("toughness").toString());
+        }
+        else {
+            ((TextView) findViewById(R.id.cardPT)).setText("N/A");
+        }
+        ((TextView)findViewById(R.id.cardText)).setText(card.opt("originalText") != null ? card.opt("originalText").toString() : card.opt("text").toString());
+        ((TextView)findViewById(R.id.cardType)).setText(card.opt("originalType") != null ? card.opt("originalType").toString() : card.opt("type").toString());
         if(getResources().getConfiguration().orientation ==
                     Configuration.ORIENTATION_LANDSCAPE) {
             setCardImage(card.opt("imageUrl").toString());

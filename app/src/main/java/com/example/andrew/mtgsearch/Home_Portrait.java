@@ -55,15 +55,15 @@ public class Home_Portrait extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
 
                         try {
-                            JSONObject jobj = new JSONObject(response.toString());
                             JSONArray data = response.getJSONArray("cards");
-                            JSONObject card = data.getJSONObject(0);
+                            JSONObject card = data.getJSONObject(data.length() - 1);
 
                             Intent cardFound = new Intent(getBaseContext(), Card_Stats.class);
                             cardFound.putExtra("CARD", card.toString());
                             startActivity(cardFound);
                         } catch (Exception e) {
                             Log.e("CardParse", "Error parsing json object for card object");
+                            Toast.makeText(getApplicationContext(), "Error retrieving card data, Card may not exist or may be entered incorrectly.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
