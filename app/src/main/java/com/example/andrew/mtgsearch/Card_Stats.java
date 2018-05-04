@@ -36,30 +36,21 @@ public class Card_Stats extends AppCompatActivity {
             setContentView(R.layout.activity_stats_portrait);
         }
 
-        try {
-            JSONObject card = new JSONObject(getIntent().getStringExtra("CARD"));
+
+            CardObject card = getIntent().getParcelableExtra("CARD");
             // ToDo fix word wrapping in text fields
             // ToDo Add auto repeating text fields for each set of rulings
-        ((TextView)findViewById(R.id.cardName)).setText(card.opt("name").toString());
-        ((TextView)findViewById(R.id.cardCost)).setText(card.opt("manaCost").toString());
-        if (card.opt("power") != null && card.opt("toughness") != null) {
-            ((TextView) findViewById(R.id.cardPT)).setText(card.opt("power").toString() + "/"
-                    + card.opt("toughness").toString());
-        }
-        else {
-            ((TextView) findViewById(R.id.cardPT)).setText("N/A");
-        }
-        ((TextView)findViewById(R.id.cardText)).setText(card.opt("originalText") != null ? card.opt("originalText").toString() : card.opt("text").toString());
-        ((TextView)findViewById(R.id.cardType)).setText(card.opt("originalType") != null ? card.opt("originalType").toString() : card.opt("type").toString());
-        if(getResources().getConfiguration().orientation ==
-                    Configuration.ORIENTATION_LANDSCAPE) {
-            setCardImage(card.opt("imageUrl").toString());
-        }
+            ((TextView)findViewById(R.id.cardName)).setText(card.name);
+            ((TextView)findViewById(R.id.cardCost)).setText(card.manaCost);
+            ((TextView) findViewById(R.id.cardPT)).setText(card.power + "/"
+                        + card.toughness);
+            ((TextView)findViewById(R.id.cardText)).setText(card.text);
+            ((TextView)findViewById(R.id.cardType)).setText(card.type);
+            if(getResources().getConfiguration().orientation ==
+                        Configuration.ORIENTATION_LANDSCAPE) {
+                setCardImage(card.imageURL);
+            }
 
-        }
-        catch (JSONException e) {
-            Toast.makeText(getApplicationContext(), "Error extracting card data, please search again", Toast.LENGTH_LONG).show();
-        }
     }
 
     public void setCardImage(String url) {

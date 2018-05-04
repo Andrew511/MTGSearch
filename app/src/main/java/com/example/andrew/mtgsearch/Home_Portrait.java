@@ -1,8 +1,11 @@
 package com.example.andrew.mtgsearch;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,18 +20,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.googlecode.tesseract.android.TessBaseAPI;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Home_Portrait extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     static final int PICK_IMAGE = 2;
+    private static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/com.example.andrew.mtgsearch/";
+    RecentCardFragment recents =  new RecentCardFragment();
 
 
     @Override
@@ -38,6 +45,10 @@ public class Home_Portrait extends AppCompatActivity {
         if (getResources().getConfiguration().orientation ==
                 Configuration.ORIENTATION_LANDSCAPE) {
             setContentView(R.layout.activity_home_landscape);
+            android.support.v4.app.FragmentTransaction fragmentTransaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.viewedCards, recents);
+            fragmentTransaction.commit();
         } else {
             setContentView(R.layout.activity_home_portrait);
         }
@@ -56,10 +67,73 @@ public class Home_Portrait extends AppCompatActivity {
 
                         try {
                             JSONArray data = response.getJSONArray("cards");
-                            JSONObject card = data.getJSONObject(data.length() - 1);
+                            JSONObject cardData = data.getJSONObject(data.length() - 1);
+                            RecentCardDBContract.RecentCardDBHelper dbHelper = new RecentCardDBContract.RecentCardDBHelper(getApplicationContext());
+                            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                            String cardName = cardData.opt("name").toString();
+                            String cardManaCost = cardData.opt("manaCost").toString();
+                            String cardPower = cardData.opt("power").toString() != null ? cardData.opt("power").toString() : "No Power";
+                            String cardToughness = cardData.opt("toughness").toString() != null ?  cardData.opt("toughness").toString() : "No Toughness";
+                            String cardText = cardData.opt("originalText") != null ? cardData.opt("originalText").toString() : cardData.opt("text").toString();
+                            String cardType = cardData.opt("originalType") != null ? cardData.opt("originalType").toString() : cardData.opt("type").toString();
+                            String cardImgURL = cardData.opt("imageUrl").toString();
+
+                            //insert card into viewed card database
+                            ContentValues cardValues = new ContentValues();
+                            cardValues.put(RecentCardDBContract.RecentCardEntry.COLUMN_NAME_NAME,
+                                    cardName);
+                            cardValues.put(RecentCardDBContract.RecentCardEntry.COLUMN_NAME_MANACOST,
+                                    cardManaCost);
+                            cardValues.put(RecentCardDBContract.RecentCardEntry.COLUMN_NAME_POWER,
+                                    cardPower);
+                            cardValues.put(RecentCardDBContract.RecentCardEntry.COLUMN_NAME_TOUGHNESS,
+                                    cardToughness);
+                            cardValues.put(RecentCardDBContract.RecentCardEntry.COLUMN_NAME_TEXT,
+                                    cardText);
+                            cardValues.put(RecentCardDBContract.RecentCardEntry.COLUMN_NAME_TYPE,
+                                    cardType);
+                            cardValues.put(RecentCardDBContract.RecentCardEntry.COLUMN_NAME_URL,
+                                    cardImgURL);
+                            long cardId = db.insert(
+                                    RecentCardDBContract.RecentCardEntry.TABLE_NAME,
+                                    null,
+                                    cardValues);
+
+
+
+                            String ruling;
+                            String date;
+                            JSONArray array = cardData.getJSONArray("rulings");
+                            ArrayList<RulingObject> rulings = new ArrayList<>();
+
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject row = array.getJSONObject(i);
+                                date = row.getString("date");
+                                ruling = row.getString("text");
+                                //insert rulings into database for card
+
+
+                                ContentValues rulingValues = new ContentValues();
+                                rulingValues.put(RecentCardDBContract.RulingsEntry.COLUMN_NAME_CARDID,
+                                        cardId);
+                                rulingValues.put(RecentCardDBContract.RulingsEntry.COLUMN_NAME_DATE,
+                                        date);
+                                rulingValues.put(RecentCardDBContract.RulingsEntry.COLUMN_NAME_RULING,
+                                        ruling);
+                                db.insert(
+                                        RecentCardDBContract.RulingsEntry.TABLE_NAME,
+                                        null,
+                                        rulingValues);
+
+
+                                rulings.add(new RulingObject(date, ruling));
+                            }
+
+                            CardObject card = new CardObject(cardName, cardManaCost, cardPower, cardToughness, cardText, cardType, cardImgURL, rulings);
 
                             Intent cardFound = new Intent(getBaseContext(), Card_Stats.class);
-                            cardFound.putExtra("CARD", card.toString());
+                            cardFound.putExtra("CARD", card);
                             startActivity(cardFound);
                         } catch (Exception e) {
                             Log.e("CardParse", "Error parsing json object for card object");
@@ -99,6 +173,20 @@ public class Home_Portrait extends AppCompatActivity {
            intent.setAction(Intent.ACTION_GET_CONTENT);
            startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE);
     }
+
+
+    private String extractText(Bitmap bitmap) throws Exception
+    {
+        TessBaseAPI tessBaseApi = new TessBaseAPI();
+        tessBaseApi.init(DATA_PATH, "eng");
+        tessBaseApi.setImage(bitmap);
+        String extractedText = tessBaseApi.getUTF8Text();
+        tessBaseApi.end();
+        return extractedText;
+    }
+
+
+    //public void ItemClickListener
 
     //ToDo add Recent query results to landscape in local database
 }

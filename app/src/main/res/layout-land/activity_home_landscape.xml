@@ -18,8 +18,8 @@
         android:text="Archangel Avacyn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.978"
-        app:layout_constraintStart_toEndOf="@+id/recents"
+        app:layout_constraintHorizontal_bias="0.994"
+        app:layout_constraintStart_toEndOf="@+id/viewedCards"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.02" />
 
@@ -28,12 +28,12 @@
         android:layout_width="154dp"
         android:layout_height="46dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="376dp"
+        android:layout_marginStart="632dp"
         android:layout_marginTop="8dp"
-        android:text="Take Photo"
         android:onClick="takePhoto"
+        android:text="Take Photo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recents"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardName"
         app:layout_constraintVertical_bias="0.009" />
 
@@ -54,67 +54,6 @@
         app:layout_constraintTop_toBottomOf="@+id/cardName"
         app:layout_constraintVertical_bias="0.006" />
 
-    <android.support.v7.widget.GridLayout
-        android:id="@+id/recents"
-        android:layout_width="223dp"
-        android:layout_height="300dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.022"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
-
-        <TextView
-            android:id="@+id/recentsTitle"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Recent1" />
-
-        <TextView
-            android:id="@+id/recent2"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Recent2"
-            app:layout_column="0"
-            app:layout_row="1" />
-
-        <TextView
-            android:id="@+id/recent3"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Recent3"
-            app:layout_column="0"
-            app:layout_row="2" />
-
-        <TextView
-            android:id="@+id/recent4"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Recent4"
-            app:layout_column="0"
-            app:layout_row="3" />
-
-        <TextView
-            android:id="@+id/recent5"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Recent5"
-            app:layout_column="0"
-            app:layout_row="4" />
-
-        <TextView
-            android:id="@+id/recent6"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Recent6"
-            app:layout_column="0"
-            app:layout_row="5" />
-    </android.support.v7.widget.GridLayout>
 
     <Button
         android:id="@+id/search"
@@ -123,14 +62,14 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:text="Grab stats"
         android:onClick="searchCard"
+        android:text="Grab stats"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.979"
-        app:layout_constraintStart_toEndOf="@+id/recents"
+        app:layout_constraintHorizontal_bias="0.988"
+        app:layout_constraintStart_toEndOf="@+id/viewedCards"
         app:layout_constraintTop_toBottomOf="@+id/cardName"
-        app:layout_constraintVertical_bias="0.184" />
+        app:layout_constraintVertical_bias="0.187" />
 
     <ImageView
         android:id="@+id/cardPreview"
@@ -142,8 +81,22 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.429"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.037"
+        app:layout_constraintStart_toEndOf="@+id/viewedCards"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:color/holo_orange_dark" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/viewedCards"
+        android:layout_width="262dp"
+        android:layout_height="449dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
