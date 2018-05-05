@@ -1,6 +1,7 @@
 package com.example.andrew.mtgsearch;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -21,13 +22,15 @@ import java.util.ArrayList;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class RecentCardFragment extends Fragment {
+public class RecentCardFragment extends Fragment implements MyRecentCardRecyclerViewAdapter.ItemClickListener {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
+    private MyRecentCardRecyclerViewAdapter adapter;
     private OnListFragmentInteractionListener mListener;
+    private ArrayList<CardObject> cards;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -69,7 +72,7 @@ public class RecentCardFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            ArrayList<CardObject> cards = new ArrayList<>();
+            cards = new ArrayList<>();
             //build cards from database
 
             RecentCardDBContract.RecentCardDBHelper recentDBHelper;
@@ -121,8 +124,10 @@ public class RecentCardFragment extends Fragment {
 
 
 
+            adapter = new MyRecentCardRecyclerViewAdapter(context, cards);
+            adapter.setClickListener(this);
+            recyclerView.setAdapter(adapter);
 
-            recyclerView.setAdapter(new MyRecentCardRecyclerViewAdapter(context, cards));
         }
         return view;
     }
@@ -145,6 +150,12 @@ public class RecentCardFragment extends Fragment {
         mListener = null;
     }
 
+    public void onItemClick(View view, int position) {
+        Intent cardFound = new Intent(getContext(), Card_Stats.class);
+        CardObject card = cards.get(position);
+        cardFound.putExtra("CARD", card);
+        startActivity(cardFound);
+    }
 
 
     /**
@@ -160,6 +171,6 @@ public class RecentCardFragment extends Fragment {
 
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(CardObject item);
+        //void onListFragmentInteraction(CardObject item);
     }
 }

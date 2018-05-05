@@ -43,8 +43,7 @@ public class CardObject implements Parcelable {
         this.text = in.readString();
         this.type = in.readString();
         this.imageURL = in.readString();
-        rulings = new ArrayList<RulingObject>();
-        in.readList(this.rulings, null);
+        rulings = in.readArrayList(RulingObject.class.getClassLoader());
     }
 
     @Override

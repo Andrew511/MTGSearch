@@ -23,13 +23,14 @@ import com.android.volley.toolbox.Volley;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class Home_Portrait extends AppCompatActivity {
+public class Home_Portrait extends AppCompatActivity implements RecentCardFragment.OnListFragmentInteractionListener {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -73,8 +74,8 @@ public class Home_Portrait extends AppCompatActivity {
 
                             String cardName = cardData.opt("name").toString();
                             String cardManaCost = cardData.opt("manaCost").toString();
-                            String cardPower = cardData.opt("power").toString() != null ? cardData.opt("power").toString() : "No Power";
-                            String cardToughness = cardData.opt("toughness").toString() != null ?  cardData.opt("toughness").toString() : "No Toughness";
+                            String cardPower = cardData.opt("power") != null ? cardData.opt("power").toString() : "No Power";
+                            String cardToughness = cardData.opt("toughness") != null ?  cardData.opt("toughness").toString() : "No Toughness";
                             String cardText = cardData.opt("originalText") != null ? cardData.opt("originalText").toString() : cardData.opt("text").toString();
                             String cardType = cardData.opt("originalType") != null ? cardData.opt("originalType").toString() : cardData.opt("type").toString();
                             String cardImgURL = cardData.opt("imageUrl").toString();
@@ -104,30 +105,37 @@ public class Home_Portrait extends AppCompatActivity {
 
                             String ruling;
                             String date;
-                            JSONArray array = cardData.getJSONArray("rulings");
-                            ArrayList<RulingObject> rulings = new ArrayList<>();
-
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject row = array.getJSONObject(i);
-                                date = row.getString("date");
-                                ruling = row.getString("text");
-                                //insert rulings into database for card
+                            ArrayList<RulingObject> rulings = new ArrayList<RulingObject>();
+                            try {
+                                JSONArray array = cardData.getJSONArray("rulings");
 
 
-                                ContentValues rulingValues = new ContentValues();
-                                rulingValues.put(RecentCardDBContract.RulingsEntry.COLUMN_NAME_CARDID,
-                                        cardId);
-                                rulingValues.put(RecentCardDBContract.RulingsEntry.COLUMN_NAME_DATE,
-                                        date);
-                                rulingValues.put(RecentCardDBContract.RulingsEntry.COLUMN_NAME_RULING,
-                                        ruling);
-                                db.insert(
-                                        RecentCardDBContract.RulingsEntry.TABLE_NAME,
-                                        null,
-                                        rulingValues);
+                                for (int i = 0; i < array.length(); i++) {
+                                    JSONObject row = array.getJSONObject(i);
+                                    date = row.getString("date");
+                                    ruling = row.getString("text");
+                                    //insert rulings into database for card
 
 
-                                rulings.add(new RulingObject(date, ruling));
+                                    ContentValues rulingValues = new ContentValues();
+                                    rulingValues.put(RecentCardDBContract.RulingsEntry.COLUMN_NAME_CARDID,
+                                            cardId);
+                                    rulingValues.put(RecentCardDBContract.RulingsEntry.COLUMN_NAME_DATE,
+                                            date);
+                                    rulingValues.put(RecentCardDBContract.RulingsEntry.COLUMN_NAME_RULING,
+                                            ruling);
+                                    db.insert(
+                                            RecentCardDBContract.RulingsEntry.TABLE_NAME,
+                                            null,
+                                            rulingValues);
+
+
+                                    rulings.add(new RulingObject(date, ruling));
+                                }
+                            }
+                            catch (JSONException e) {
+                                rulings = new ArrayList<RulingObject>();
+                                rulings.add(new RulingObject("", "No rulings for this card"));
                             }
 
                             CardObject card = new CardObject(cardName, cardManaCost, cardPower, cardToughness, cardText, cardType, cardImgURL, rulings);

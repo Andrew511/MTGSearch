@@ -35,21 +35,24 @@ public class RecentCardDBContract {
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String COMMA_SEP = ",";
-    private static final String SQL_CREATE_ENTRIES =
+    private static final String SQL_CREATE_RECENTS =
             "CREATE TABLE " + RecentCardEntry.TABLE_NAME + " (" +
                     RecentCardEntry._ID + " INTEGER PRIMARY KEY," +
                     RecentCardEntry.COLUMN_NAME_NAME + TEXT_TYPE
                     + COMMA_SEP +
-                    RecentCardEntry.COLUMN_NAME_MANACOST + TEXT_TYPE +
+                    RecentCardEntry.COLUMN_NAME_MANACOST + TEXT_TYPE
+                    + COMMA_SEP +
                     RecentCardEntry.COLUMN_NAME_POWER + TEXT_TYPE
                     + COMMA_SEP +
-                    RecentCardEntry.COLUMN_NAME_TOUGHNESS + TEXT_TYPE +
+                    RecentCardEntry.COLUMN_NAME_TOUGHNESS + TEXT_TYPE
+                    + COMMA_SEP +
                     RecentCardEntry.COLUMN_NAME_TEXT + TEXT_TYPE
                     + COMMA_SEP +
                     RecentCardEntry.COLUMN_NAME_TYPE + TEXT_TYPE +
                     COMMA_SEP +
-                    RecentCardEntry.COLUMN_NAME_URL + TEXT_TYPE + " )"
-            + "; CREATE TABLE " + RulingsEntry.TABLE_NAME + " (" +
+                    RecentCardEntry.COLUMN_NAME_URL + TEXT_TYPE + " )";
+    private static final String SQL_CREATE_RULINGS =
+            "CREATE TABLE " + RulingsEntry.TABLE_NAME + " (" +
                     RulingsEntry._ID + " INTEGER PRIMARY KEY," +
                     RulingsEntry.COLUMN_NAME_CARDID + " INTEGER" +
                     COMMA_SEP +
@@ -57,14 +60,15 @@ public class RecentCardDBContract {
                     COMMA_SEP +
                     RulingsEntry.COLUMN_NAME_RULING + TEXT_TYPE +" )";
 
-    private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + RecentCardEntry.TABLE_NAME + "; " +
+    private static final String SQL_DELETE_RECENTS =
+            "DROP TABLE IF EXISTS " + RecentCardEntry.TABLE_NAME;
+    private static final String SQL_DELETE_RULINGS =
                     "DROP TABLE IF EXISTS " + RulingsEntry.TABLE_NAME;
 
     public static class RecentCardDBHelper extends
             SQLiteOpenHelper {
         //if the schema changes, the version must change
-        public static final int DATABASE_VERSION = 1;
+        public static final int DATABASE_VERSION = 2;
         public static final String DATABASE_NAME =
                 "RecentCards.db";
 
@@ -73,12 +77,15 @@ public class RecentCardDBContract {
                     null, DATABASE_VERSION);
         }
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(SQL_CREATE_ENTRIES);
+
+            db.execSQL(SQL_CREATE_RECENTS);
+            db.execSQL(SQL_CREATE_RULINGS);
         }
         public void onUpgrade(SQLiteDatabase db,
                               int oldVersion, int newVersion) {
             //onUpgrade, just start over
-            db.execSQL(SQL_DELETE_ENTRIES);
+            db.execSQL(SQL_DELETE_RECENTS);
+            db.execSQL(SQL_DELETE_RULINGS);
             onCreate(db);
         }
         public void onDowngrade(SQLiteDatabase db,
