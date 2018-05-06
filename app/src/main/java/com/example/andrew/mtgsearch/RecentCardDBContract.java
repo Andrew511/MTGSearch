@@ -38,7 +38,7 @@ public class RecentCardDBContract {
     private static final String SQL_CREATE_RECENTS =
             "CREATE TABLE " + RecentCardEntry.TABLE_NAME + " (" +
                     RecentCardEntry._ID + " INTEGER PRIMARY KEY," +
-                    RecentCardEntry.COLUMN_NAME_NAME + TEXT_TYPE
+                    RecentCardEntry.COLUMN_NAME_NAME + TEXT_TYPE + " UNIQUE"
                     + COMMA_SEP +
                     RecentCardEntry.COLUMN_NAME_MANACOST + TEXT_TYPE
                     + COMMA_SEP +
@@ -68,7 +68,7 @@ public class RecentCardDBContract {
     public static class RecentCardDBHelper extends
             SQLiteOpenHelper {
         //if the schema changes, the version must change
-        public static final int DATABASE_VERSION = 2;
+        public static final int DATABASE_VERSION = 3;
         public static final String DATABASE_NAME =
                 "RecentCards.db";
 

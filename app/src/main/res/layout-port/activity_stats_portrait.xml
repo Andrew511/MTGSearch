@@ -6,102 +6,186 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <GridLayout
-        android:layout_width="511dp"
-        android:layout_height="717dp"
+    <ScrollView
+        android:layout_width="500dp"
+        android:layout_height="700dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.401"
+        android:scrollbars="none"
+        android:layout_weight="1">
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="500dp"
+        android:layout_height="700dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.401">
 
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black">
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="1"
-            android:text="Type" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="@android:color/white"
+                android:text="Name"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="369dp" />
 
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="2"
-            android:text="Mana Cost" />
+            <TextView
+                android:id="@+id/cardName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_margin="1dp"
+                android:layout_row="0"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:text=""
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="1031dp" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="3"
-            android:text="Power/Toughness" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black">
 
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="4"
-            android:text="Text" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_margin="1dp"
+                android:layout_row="1"
+                android:background="@android:color/white"
+                android:text="Type" />
 
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="5"
-            android:text="Rulings" />
+            <TextView
+                android:id="@+id/cardType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_margin="1dp"
+                android:layout_row="1"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:text="" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/cardName"
-            android:layout_width="244dp"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_row="0"
-            android:text="TextView" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black">
 
-        <TextView
-            android:id="@+id/cardType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_row="1"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_margin="1dp"
+                android:layout_row="2"
+                android:background="@android:color/white"
+                android:text="Mana Cost" />
 
-        <TextView
-            android:id="@+id/cardCost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_row="2"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/cardCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_margin="1dp"
+                android:layout_row="2"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:text="" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/cardPT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_row="3"
-            android:text="TextView" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black">
 
-        <TextView
-            android:id="@+id/cardText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_row="4"
-            android:text="TextView" />
-    </GridLayout>
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_margin="1dp"
+                android:layout_row="3"
+                android:background="@android:color/white"
+                android:text="Power/Toughness" />
+
+            <TextView
+                android:id="@+id/cardPT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_margin="1dp"
+                android:layout_row="3"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:text="" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_column="0"
+                android:layout_margin="1dp"
+                android:layout_row="4"
+                android:background="@android:color/white"
+                android:text="Text" />
+
+            <TextView
+                android:id="@+id/cardText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_margin="1dp"
+                android:layout_row="4"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:text="" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_margin="1dp"
+                android:layout_row="5"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:text="Rulings" />
+        </TableRow>
+    </TableLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>
