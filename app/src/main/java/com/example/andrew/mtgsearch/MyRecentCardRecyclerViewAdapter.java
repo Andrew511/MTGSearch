@@ -2,14 +2,11 @@ package com.example.andrew.mtgsearch;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,13 +17,11 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.andrew.mtgsearch.RecentCardFragment.OnListFragmentInteractionListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link CardObject} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
  */
 public class MyRecentCardRecyclerViewAdapter extends RecyclerView.Adapter<MyRecentCardRecyclerViewAdapter.ViewHolder> {
 
@@ -102,11 +97,6 @@ public class MyRecentCardRecyclerViewAdapter extends RecyclerView.Adapter<MyRece
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
-    }
-
-    // convenience method for getting data at click position
-    CardObject getItem(int id) {
-        return mData.get(id);
     }
 
     // allows clicks events to be caught

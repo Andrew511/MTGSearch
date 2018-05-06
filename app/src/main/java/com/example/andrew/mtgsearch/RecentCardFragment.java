@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,18 +38,8 @@ public class RecentCardFragment extends Fragment implements MyRecentCardRecycler
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public RecentCardFragment() {
-    }
+    public RecentCardFragment() {}
 
- /*   // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static RecentCardFragment newInstance(int columnCount) {
-        RecentCardFragment fragment = new RecentCardFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    } */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -208,8 +197,5 @@ public class RecentCardFragment extends Fragment implements MyRecentCardRecycler
      * >Communicating with Other Fragments</a> for more information.
      */
 
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        //void onListFragmentInteraction(CardObject item);
-    }
+    public interface OnListFragmentInteractionListener {}
 }
